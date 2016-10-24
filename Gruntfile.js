@@ -1,5 +1,5 @@
 /* eslint-env: node */
-/* eslint strict: 0, vars-on-top: 0 */
+/* eslint strict: [2, "never"], vars-on-top: 0 */
 /**
  * Gaan we al naar StarWars.nl
  * Just something stupid
@@ -10,7 +10,8 @@
 
 var ImageminMozJpeg = require('imagemin-mozjpeg');
 var ImageminJpegRecompress = require('imagemin-jpeg-recompress');
-var AutoPrefixer = require('autoprefixer');
+var AutoPrefix = require('less-plugin-autoprefix');
+var es6Promise = require('es6-promise');
 
 module.exports = function(grunt) {
     var banner = {
@@ -67,7 +68,6 @@ module.exports = function(grunt) {
                 'dev/js/*.js'
             ]
         },
-        eslintconfig: '.eslintrc.json',
         eslint: [
             'Gruntfile.js',
             'dev/js/*.js'
@@ -95,7 +95,7 @@ module.exports = function(grunt) {
 
     var plugins = {
         less: [
-            new AutoPrefixer({
+            new AutoPrefix({
                 browsers: ["last 2 versions"]
             })
         ],
@@ -108,6 +108,9 @@ module.exports = function(grunt) {
             })
         ]
     };
+
+    // Load polyfill
+    es6Promise.polyfill();
 
     grunt.initConfig({
         pkg: grunt.file.readJSON('package.json'),
