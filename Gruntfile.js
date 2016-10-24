@@ -1,18 +1,22 @@
-/* jshint strict: false */
+/* eslint-env: node */
+/* eslint strict: 0, vars-on-top: 0 */
 /**
  * Gaan we al naar StarWars.nl
  * Just something stupid
  * @author Roelof Roos <github@roelof.io>
- * @license GPL-3.0
- * @see https://gogs.roelof.io/SirQuack/starwars
+ * @license AGPL-3.0
+ * @see https://github.com/roelofr/starwars
  */
 
-module.exports = function(grunt) {
+var ImageminMozJpeg = require('imagemin-mozjpeg');
+var ImageminJpegRecompress = require('imagemin-jpeg-recompress');
+var AutoPrefixer = require('autoprefixer');
 
+module.exports = function(grunt) {
     var banner = {
         header: [
             'Gaan we al naar StarWars.nl',
-            'Just something stupid',
+            'Just something stupid'
         ],
         dev: [
             'DEVELOPMENT BUILD',
@@ -20,8 +24,8 @@ module.exports = function(grunt) {
         ],
         meta: [
             '@author Roelof Roos <github@roelof.io>',
-            '@license GPL-3.0',
-            '@see https://gogs.roelof.io/SirQuack/starwars'
+            '@license AGPL-3.0',
+            '@see https://github.com/roelofr/starwars'
         ]
     };
 
@@ -36,8 +40,8 @@ module.exports = function(grunt) {
 
         var prefix = ' * ';
 
-        data.forEach(function(v){
-            if( !banner[v] ) {
+        data.forEach(function(v) {
+            if (!banner[v]) {
                 return;
             }
 
@@ -59,16 +63,17 @@ module.exports = function(grunt) {
     var files = {
         js: {
             'assets/script.min.js': [
-                './bower_components/jquery.countdown/dist/jquery.countdown.js',
-                './dev/js/*.js'
+                'node_components/jquery-countdown/src/countdown.js',
+                'dev/js/*.js'
             ]
         },
-        jshint: [
-            './Gruntfile.js',
-            './dev/js/*.js'
+        eslintconfig: '.eslintrc.json',
+        eslint: [
+            'Gruntfile.js',
+            'dev/js/*.js'
         ],
         less: {
-            'assets/style.css': './dev/less/style.less'
+            'assets/style.css': 'dev/less/style.less'
         },
         img: [{
             expand: true,
@@ -77,30 +82,26 @@ module.exports = function(grunt) {
             dest: 'assets/'
         }],
         watch: {
-            js: './dev/js/*.js',
-            less: './dev/less/*.less',
-            img: './dev/img/*.{png,jpg,gif}'
+            js: 'dev/js/*.js',
+            less: 'dev/less/*.less',
+            img: 'dev/img/*.{png,jpg,gif}'
         },
         clean: [
-            './assets/*',
-            '!./assets/script.min.js',
-            '!./assets/style.css'
+            'assets/*',
+            '!assets/script.min.js',
+            '!assets/style.css'
         ]
     };
 
-    var Autoprefix = require('less-plugin-autoprefix');
-    var mozJpeg = require('imagemin-mozjpeg');
-    var imageminJpegRecompress  = require('imagemin-jpeg-recompress');
-
     var plugins = {
         less: [
-            new Autoprefix({
+            new AutoPrefixer({
                 browsers: ["last 2 versions"]
             })
         ],
         img: [
-            new mozJpeg(),
-            new imageminJpegRecompress({
+            new ImageminMozJpeg(),
+            new ImageminJpegRecompress({
                 accurate: true,
                 progressive: true,
                 max: 60
@@ -145,10 +146,10 @@ module.exports = function(grunt) {
         },
 
         // JS Linter
-        jshint: {
-            files: files.jshint,
+        eslint: {
+            target: files.eslint,
             options: {
-                jshintrc: './.jshintrc'
+                fix: false
             }
         },
 
@@ -220,28 +221,17 @@ module.exports = function(grunt) {
         }
     });
 
-    // Styling guide enforcement
-    grunt.loadNpmTasks('grunt-contrib-jshint');
-
-    // JS compilation
-    grunt.loadNpmTasks('grunt-contrib-uglify');
-
-    // CSS compilation
-    grunt.loadNpmTasks('grunt-contrib-less');
-
-    // Image stuff
-    grunt.loadNpmTasks('grunt-contrib-imagemin');
-
-    // Cleaning up
     grunt.loadNpmTasks('grunt-contrib-clean');
-
-    // Live server functionality
+    grunt.loadNpmTasks('grunt-contrib-imagemin');
+    grunt.loadNpmTasks('grunt-contrib-less');
+    grunt.loadNpmTasks('grunt-contrib-uglify');
     grunt.loadNpmTasks('grunt-contrib-watch');
+    grunt.loadNpmTasks('grunt-eslint');
 
     // Start registering tasks
     grunt.registerTask('test', ['test-js', 'test-css']);
 
-    grunt.registerTask('test-js', ['jshint']);
+    grunt.registerTask('test-js', ['eslint']);
     grunt.registerTask('test-css', ['less:dev']);
 
     grunt.registerTask(

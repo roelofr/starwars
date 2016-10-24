@@ -1,0 +1,18 @@
+language: node
+node_js:
+    - "node"
+    - "6"
+    - "6.0"
+    - "5"
+    - "0.6"
+
+sudo: false
+
+before_script:
+    # Install Grunt
+    - travis_retry npm install -g grunt-cli
+    # Install dependancies
+    - travis_retry npm install
+
+script:
+    - grunt prod

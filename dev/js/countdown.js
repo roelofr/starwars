@@ -1,3 +1,6 @@
+/**
+ * Countdown handler
+ */
 (function(doc, $) {
     'use strict';
 
@@ -10,9 +13,9 @@
      * attribute
      * @private
      */
-    var GetTime = function() {
+    var getTime = function() {
         var dateString = $('body').data('showdate');
-        if(dateString) {
+        if (dateString) {
             countTo = new Date(dateString);
         } else {
             countTo = new Date('2016-01-01T12:00:00+00:00');
@@ -25,7 +28,7 @@
      * @return {Boolean} True if the thing has already happened
      */
     var isPast = function() {
-        if(!countTo) {
+        if (!countTo) {
             return true;
         }
 
@@ -36,7 +39,7 @@
      * Handles a page refresh, with throttling
      */
     var refresh = function() {
-        if(!canRefresh || countTo === null) {
+        if (!canRefresh || countTo === null) {
             return;
         }
 
@@ -52,14 +55,13 @@
      * @param {Event} event Event to handle
      */
     var update = function(event) {
-
         var format = [];
 
-        if(event.offset.weeks > 0) {
+        if (event.offset.weeks > 0) {
             format.push('%-w %!w:week,weken;');
         }
 
-        if(event.offset.daysToWeek > 0) {
+        if (event.offset.daysToWeek > 0) {
             format.push('%-d dag%!d:en;');
         }
 
@@ -74,21 +76,21 @@
      * @private
      */
     var init = function() {
-        GetTime();
+        getTime();
 
         // Stop if in the past
-        if(isPast()) {
+        if (isPast()) {
             console.log('it\'s past');
             return;
         }
 
-        countWith = $("[data-content=countdown]").eq(0);
+        countWith = $('[data-content=countdown]').eq(0);
 
-        if(countWith.length === 0) {
-            countWith = $(".text-muted > span").eq(0);
+        if (countWith.length === 0) {
+            countWith = $('.text-muted > span').eq(0);
         }
 
-        if(countWith.length === 0) {
+        if (countWith.length === 0) {
             return;
         }
 
@@ -99,5 +101,4 @@
 
     // Trigger init on DOM ready
     $(doc).ready(init);
-
 }(document, jQuery));
