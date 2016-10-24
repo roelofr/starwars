@@ -20,6 +20,7 @@
     "grunt-contrib-uglify": "^1.0.0",
     "grunt-contrib-watch": "^1.0.0",
     "grunt-eslint": "^19.0.0",
+    "grunt-lesslint": "^3.2.0",
     "imagemin-jpeg-recompress": "^4.3.0",
     "imagemin-mozjpeg": "^5.1.0",
     "jquery-countdown": "^2.2.0",

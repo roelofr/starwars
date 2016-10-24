@@ -58,7 +58,7 @@ $replace = array(
     'answer' => '??',
     'eta' => '??',
     'startdate' => $showDate->format('c'),
-    'body-class' => $isPast ? 'bg-after' : 'bg-before'
+    'body-class' => 'body ' . ($isPast ? 'body--after' : 'body--before')
 );
 
 if ($isPast) {

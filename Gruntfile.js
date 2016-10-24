@@ -72,6 +72,9 @@ module.exports = function(grunt) {
             'Gruntfile.js',
             'dev/js/*.js'
         ],
+        lesslint: [
+            'dev/less/style.less'
+        ],
         less: {
             'assets/style.css': 'dev/less/style.less'
         },
@@ -156,6 +159,11 @@ module.exports = function(grunt) {
             }
         },
 
+        // Less linting
+        lesslint: {
+            src: files.lesslint
+        },
+
         // Start of LESS linter and compiler
         less: {
             prod: {
@@ -230,12 +238,13 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-contrib-uglify');
     grunt.loadNpmTasks('grunt-contrib-watch');
     grunt.loadNpmTasks('grunt-eslint');
+    grunt.loadNpmTasks('grunt-lesslint');
 
     // Start registering tasks
     grunt.registerTask('test', ['test-js', 'test-css']);
 
     grunt.registerTask('test-js', ['eslint']);
-    grunt.registerTask('test-css', ['less:dev']);
+    grunt.registerTask('test-css', ['lesslint']);
 
     grunt.registerTask(
         'dev-js',
