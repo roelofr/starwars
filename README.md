@@ -15,7 +15,7 @@ See #1.
 
 ## Installing
 
-Requires [NPM][nodejs] and [Grunt][grunt] to be installed.
+Requires [Node][nodejs] 6.0+ and [Grunt][grunt] to be installed.
 
 ```shell
 npm install
