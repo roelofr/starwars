@@ -1,12 +1,13 @@
 <?php
+
 date_default_timezone_set('Europe/Amsterdam');
 
-const StarDate = "2017-12-17T00:00:00+01:00";
+require_once __DIR__ . '/functions.php';
 
 $templateFile = __DIR__ . '/dev/html/main.html';
 
-if(!file_exists($templateFile)) {
-    http_response_code( 500 );
+if (!file_exists($templateFile)) {
+    http_response_code(500);
     echo "<h1>500 Internal Server Error</h1>";
     die();
 }
@@ -14,23 +15,24 @@ if(!file_exists($templateFile)) {
 $html = file_get_contents($templateFile);
 $htmlMod = filemtime($templateFile);
 
-$showDate = new DateTime(StarDate);
+$showDate = new DateTime(GOAL_DATE);
 $nowDate = new DateTime();
 
 $showDiff = $showDate->diff($nowDate);
 $isPast = !($showDiff->invert);
 
-if($isPast)
+if ($isPast) {
     $lastModified = max($showDate->getOffset(), $htmlMod);
-else
+} else {
     $lastModified = $htmlMod;
+}
 $lastModifiedS = gmdate('r', $lastModified);
 
 // Check if we've got a check header
 $headerMod = filter_input(INPUT_SERVER, 'HTTP_IF_MODIFIED_SINCE');
-if($headerMod) {
+if ($headerMod) {
     $mod = strtotime($headerMod);
-    if($mod == $lastModified) {
+    if ($mod == $lastModified) {
         http_response_code(304);
         exit();
     }
@@ -49,18 +51,6 @@ $lang = (object) array(
  * @param $file The file to check
  * @return string hash, or 'unknown'
  */
-function calcForm($file) {
-    if($file[0] == '/')
-        $file = __DIR__ . $file;
-
-    if(!file_exists($file) || !is_file($file))
-        return "unknown";
-
-    $hash = hash_file('sha384', $file, true);
-
-    return sprintf('sha384-%s', base64_encode($hash));
-}
-
 
 $replace = array(
     'integ-style' => calcForm('/assets/style.css'),
@@ -71,7 +61,7 @@ $replace = array(
     'body-class' => $isPast ? 'bg-after' : 'bg-before'
 );
 
-if($isPast) {
+if ($isPast) {
     $replace['answer'] = $lang->yes;
     $replace['eta'] = $lang->yes_eta;
 } else {
@@ -83,13 +73,15 @@ if($isPast) {
 
     $format = array();
 
-    if($_weeks > 1)
+    if ($_weeks > 1) {
         $format[] = sprintf('%s weken', $_weeks);
-    else if($_weeks == 1)
+    } elseif ($_weeks == 1) {
         $format[] = '1 week';
+    }
 
-    if($_days > 0)
+    if ($_days > 0) {
         $format[] = sprintf('%s dag%s', $_days, $_days > 1 ? 'en' : '');
+    }
 
     $format[] = $showDiff->format('%H:%I:%S');
 
@@ -99,15 +91,15 @@ if($isPast) {
     $replace['eta'] = sprintf($lang->no_eta, $field);
 }
 
-foreach($replace as $x=>$y) {
-    $x = '{{' . $x . '}}';
+foreach ($replace as $x => $y) {
+    $x = sprintf('{{%s}}', $x);
     $html = str_replace($x, $y, $html);
 }
 
 $allowEnc = filter_input(INPUT_SERVER, 'HTTP_ACCEPT_ENCODING');
-$hasGzip = $allowEnc ? preg_match('(^|,)\s*gzip\s*($|,)', $allowEnc) : false;
+$hasGzip = preg_match('(^|,)\s*gzip\s*($|,)', $allowEnc ? $allowEnc : '');
 
-if($hasGzip) {
+if ($hasGzip) {
     $html = gzencode($html, 9);
     header('Content-Encoding: gzip');
 }
