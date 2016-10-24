@@ -97,7 +97,7 @@ foreach ($replace as $x => $y) {
 }
 
 $allowEnc = filter_input(INPUT_SERVER, 'HTTP_ACCEPT_ENCODING');
-$hasGzip = preg_match('(^|,)\s*gzip\s*($|,)', $allowEnc ? $allowEnc : '');
+$hasGzip = preg_match('/(^|,)\s*gzip\s*($|,)/i', $allowEnc ? $allowEnc : '');
 
 if ($hasGzip) {
     $html = gzencode($html, 9);
