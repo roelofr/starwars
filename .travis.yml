@@ -1,8 +1,7 @@
-language: node
+language: node_js
 node_js:
     - "node"
     - "6"
-    - "6.0"
 
 sudo: false
 
