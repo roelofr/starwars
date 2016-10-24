@@ -64,7 +64,7 @@ module.exports = function(grunt) {
     var files = {
         js: {
             'assets/script.min.js': [
-                'node_components/jquery-countdown/src/countdown.js',
+                'node_modules/jquery-countdown/src/countdown.js',
                 'dev/js/*.js'
             ]
         },
@@ -130,7 +130,7 @@ module.exports = function(grunt) {
                     mangle: true,
                     compress: true,
                     ASCIIOnly: false,
-                    preserveComments: 'some',
+                    preserveComments: 0,
                     banner: distBanner,
                     mangleProperties: true,
                     quoteStyle: 1
