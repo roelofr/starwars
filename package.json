@@ -1,0 +1,29 @@
+{
+  "name": "io.roelof.starwars",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.php",
+  "scripts": {
+    "test": "grunt test"
+  },
+  "author": "Roelof Roos <github@roelof.io>",
+  "license": "AGPL-3.0",
+  "devDependencies": {
+    "autoprefixer": "^6.3.1",
+    "grunt": "^0.4.5",
+    "grunt-contrib-clean": "^0.7.0",
+    "grunt-contrib-csslint": "^0.5.0",
+    "grunt-contrib-imagemin": "^1.0.0",
+    "grunt-contrib-jshint": "^0.12.0",
+    "grunt-contrib-less": "^1.1.0",
+    "grunt-contrib-uglify": "^0.11.0",
+    "grunt-contrib-watch": "^0.6.1",
+    "grunt-imgmin": "^0.1.2",
+    "grunt-jscs": "^2.6.0",
+    "imagemin-jpeg-recompress": "^4.3.0",
+    "imagemin-mozjpeg": "^5.1.0",
+    "jquery": "^2.2.0",
+    "less": "^2.5.3",
+    "less-plugin-autoprefix": "^1.5.1"
+  }
+}
