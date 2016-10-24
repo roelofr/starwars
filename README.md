@@ -43,12 +43,12 @@ server {
     server_name example.com;
 
     # Security
-    add_header X-Frame-Options              deny;
-    add_header X-Content-Type-Options       nosniff;
-    add_header Strict-Transport-Security    max-age=31536000;
+    add_header X-Frame-Options deny;
+    add_header X-Content-Type-Options nosniff;
+    add_header Strict-Transport-Security max-age=31536000;
 
     # CSP
-    add_header Content-Security-Policy      "default-src 'none'; script-src 'self' https://ajax.googleapis.com https://maxcdn.bootstrapcdn.com; style-src 'self' https://maxcdn.bootstrapcdn.com; img-src 'self'";
+    add_header Content-Security-Policy "default-src 'none'; script-src 'self' https://ajax.googleapis.com https://maxcdn.bootstrapcdn.com; style-src 'self' https://maxcdn.bootstrapcdn.com; img-src 'self'; font-src https://maxcdn.bootstrapcdn.com";
 
     root /usr/share/nginx/starwars;
     index index.php;
