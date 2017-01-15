@@ -2,6 +2,7 @@
 
 date_default_timezone_set('Europe/Amsterdam');
 
+require_once __DIR__ . '/constants.php';
 require_once __DIR__ . '/functions.php';
 
 $templateFile = __DIR__ . '/dev/html/main.html';

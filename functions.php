@@ -1,7 +1,5 @@
 <?php
 
-const GOAL_DATE = "2017-12-17T00:00:00+01:00";
-
 /**
  * Calculates a file checksum
  *
