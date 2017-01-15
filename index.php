@@ -59,6 +59,7 @@ $replace = array(
     'answer' => '??',
     'eta' => '??',
     'startdate' => $showDate->format('c'),
+    'showname' => GOAL_NAME,
     'body-class' => 'body ' . ($isPast ? 'body--after' : 'body--before')
 );
 
