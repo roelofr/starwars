@@ -18,7 +18,7 @@
         if (dateString) {
             countTo = new Date(dateString);
         } else {
-            countTo = new Date('2016-01-01T12:00:00+00:00');
+            countTo = new Date('2020-01-01T12:00:00+00:00');
         }
     };
 
