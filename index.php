@@ -67,22 +67,22 @@ if ($isPast) {
     $replace['answer'] = $lang->yes;
     $replace['eta'] = $lang->yes_eta;
 } else {
-    $_weeks = floor($showDiff->d / 7);
-    $_days = $showDiff->d - $_weeks * 7;
-    $_hours = $showDiff->h;
-    $_mins = $showDiff->i;
-    $_secs = $showDiff->s;
+    $dayCount = (int) $showDiff->format('%a');
+    $weeks = floor($dayCount / 7);
+    $days = $dayCount % 7;
 
     $format = array();
 
-    if ($_weeks > 1) {
-        $format[] = sprintf('%s weken', $_weeks);
-    } elseif ($_weeks == 1) {
+    if ($weeks === 1) {
         $format[] = '1 week';
+    } elseif ($weeks > 1) {
+        $format[] = "{$weeks} weken";
     }
 
-    if ($_days > 0) {
-        $format[] = sprintf('%s dag%s', $_days, $_days > 1 ? 'en' : '');
+    if ($days === 1) {
+        $format[] = '1 dag';
+    } elseif ($days > 1) {
+        $format[] = "{$days} dagen";
     }
 
     $format[] = $showDiff->format('%H:%I:%S');
